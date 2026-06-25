@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Call for Posters — Submission Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0a0e14;
+    --surface:   #111720;
+    --card:      #161d28;
+    --border:    #1e2c3a;
+    --border-focus: #00c9a7;
+    --cyan:      #00c9a7;
+    --cyan-dim:  #00c9a720;
+    --cyan-glow: #00c9a740;
+    --text:      #e8edf3;
+    --muted:     #6b7f93;
+    --error:     #ff5c5c;
+    --success:   #00c9a7;
+    --label:     #9eb3c8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: relative;
+    overflow: hidden;
+    padding: 72px 24px 56px;
+    text-align: center;
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, #00c9a718 0%, transparent 70%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      #1a2535 39px,
+      #1a2535 40px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      #1a2535 39px,
+      #1a2535 40px
+    );
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    border: 1px solid var(--cyan);
+    border-radius: 20px;
+    padding: 4px 14px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    position: relative;
+    margin-bottom: 14px;
+  }
+
+  .header h1 span {
+    color: var(--cyan);
+  }
+
+  .header p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 520px;
+    margin: 0 auto 28px;
+    position: relative;
+  }
+
+  .deadline-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cyan-dim);
+    border: 1px solid var(--cyan-glow);
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 13px;
+    color: var(--cyan);
+    font-weight: 500;
+    position: relative;
+  }
+
+  .deadline-pill .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── STEPS NAV ── */
+  .steps-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 32px 24px 0;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    cursor: default;
+  }
+
+  .step-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    transition: background 0.4s;
+  }
+
+  .step-item.completed:not(:last-child)::after {
+    background: var(--cyan);
+  }
+
+  .step-circle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s;
+  }
+
+  .step-item.active .step-circle {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    background: var(--cyan-dim);
+    box-shadow: 0 0 12px var(--cyan-glow);
+  }
+
+  .step-item.completed .step-circle {
+    border-color: var(--cyan);
+    background: var(--cyan);
+    color: #0a0e14;
+  }
+
+  .step-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-align: center;
+  }
+
+  .step-item.active .step-label { color: var(--cyan); }
+  .step-item.completed .step-label { color: var(--label); }
+
+  /* ── FORM CONTAINER ── */
+  .form-wrap {
+    max-width: 640px;
+    margin: 36px auto 0;
+    padding: 0 16px;
+  }
+
+  .form-section {
+    display: none;
+    animation: fadeUp 0.35s ease;
+  }
+
+  .form-section.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    margin-bottom: 28px;
+  }
+
+  .section-header h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .section-header p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    margin-bottom: 16px;
+  }
+
+  /* ── FIELDS ── */
+  .field { margin-bottom: 22px; }
+  .field:last-child { margin-bottom: 0; }
+
+  .field label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--label);
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+  }
+
+  .req {
+    color: var(--cyan);
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7f93' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 38px;
+    cursor: pointer;
+  }
+
+  .field select option {
+    background: var(--card);
+    color: var(--text);
+  }
+
+  .field textarea {
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.6;
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px var(--cyan-dim);
+  }
+
+  .field input.error,
+  .field select.error,
+  .field textarea.error {
+    border-color: var(--error);
+    box-shadow: 0 0 0 3px #ff5c5c18;
+  }
+
+  .err-msg {
+    font-size: 12px;
+    color: var(--error);
+    margin-top: 5px;
+    display: none;
+  }
+
+  .err-msg.show { display: block; }
+
+  .hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+
+  /* char counter */
+  .char-wrap { position: relative; }
+
+  .char-count {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 11px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  .char-count.warn { color: #f59e0b; }
+  .char-count.over { color: var(--error); }
+
+  /* two-col grid */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 480px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* coauthors */
+  .coauthor-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .coauthor-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 36px;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .coauthor-row input { margin: 0; }
+
+  .remove-btn {
+    width: 34px; height: 34px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--muted);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .remove-btn:hover { border-color: var(--error); color: var(--error); }
+
+  .add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .add-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* keywords */
+  .tag-input-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 8px 10px;
+    min-height: 46px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: text;
+  }
+
+  .tag-input-wrap:focus-within {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px var(--cyan-dim);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--cyan-dim);
+    border: 1px solid var(--cyan-glow);
+    color: var(--cyan);
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 2px 8px;
+  }
+
+  .tag button {
+    background: none; border: none; color: inherit;
+    cursor: pointer; font-size: 13px; line-height: 1;
+    padding: 0; opacity: 0.7;
+  }
+
+  .tag button:hover { opacity: 1; }
+
+  #keyword-input {
+    border: none; background: transparent;
+    color: var(--text); font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    outline: none; min-width: 100px; flex: 1;
+    padding: 2px 0;
+  }
+
+  #keyword-input::placeholder { color: var(--muted); opacity: 0.7; }
+
+  /* radio/checkbox */
+  .radio-group, .check-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .radio-option, .check-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    transition: all 0.2s;
+  }
+
+  .radio-option:hover, .check-option:hover {
+    border-color: var(--cyan-glow);
+    background: var(--cyan-dim);
+  }
+
+  .radio-option input, .check-option input {
+    width: 16px; height: 16px;
+    accent-color: var(--cyan);
+    margin-top: 1px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .radio-option span, .check-option span {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .radio-option small, .check-option small {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* ── NAVIGATION BUTTONS ── */
+  .btn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 12px 24px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.22s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--label);
+    color: var(--text);
+  }
+
+  .btn-primary {
+    background: var(--cyan);
+    color: #0a0e14;
+    box-shadow: 0 0 20px var(--cyan-glow);
+  }
+
+  .btn-primary:hover {
+    background: #00e2bc;
+    box-shadow: 0 0 28px #00c9a760;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* ── SUCCESS SCREEN ── */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 24px;
+    animation: fadeUp 0.4s ease;
+  }
+
+  .success-screen.show { display: block; }
+
+  .success-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--cyan-dim);
+    border: 2px solid var(--cyan);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 32px;
+  }
+
+  .success-screen h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .success-screen p {
+    color: var(--muted);
+    max-width: 420px;
+    margin: 0 auto 24px;
+    font-size: 15px;
+  }
+
+  .ref-code {
+    display: inline-block;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--cyan);
+    letter-spacing: 0.08em;
+    margin-bottom: 32px;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrap {
+    max-width: 640px;
+    margin: 20px auto 0;
+    padding: 0 16px;
+  }
+
+  .progress-track {
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--cyan);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 8px var(--cyan);
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="badge">Open for Submissions</div>
+  <h1>Call for <span>Posters</span></h1>
+  <p>Submit your research for review. Accepted posters will be featured at the symposium and included in the proceedings.</p>
+  <div class="deadline-pill">
+    <span class="dot"></span>
+    Submission deadline: <strong id="deadline-display">To be announced</strong>
+  </div>
+</div>
+
+<!-- STEPS -->
+<div class="steps-nav" id="steps-nav">
+  <div class="step-item active" data-step="1">
+    <div class="step-circle">1</div>
+    <div class="step-label">Author</div>
+  </div>
+  <div class="step-item" data-step="2">
+    <div class="step-circle">2</div>
+    <div class="step-label">Poster</div>
+  </div>
+  <div class="step-item" data-step="3">
+    <div class="step-circle">3</div>
+    <div class="step-label">Content</div>
+  </div>
+  <div class="step-item" data-step="4">
+    <div class="step-circle">4</div>
+    <div class="step-label">Confirm</div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar-wrap" id="progress-bar-wrap">
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width:25%"></div>
+  </div>
+</div>
+
+<!-- FORM WRAPPER -->
+<div class="form-wrap" id="form-wrap">
+
+  <!-- ── STEP 1: AUTHOR INFO ── -->
+  <div class="form-section active" id="step-1">
+    <div class="section-header">
+      <h2>Author Information</h2>
+      <p>Details about the presenting / corresponding author.</p>
+    </div>
+
+    <div class="card">
+      <div class="grid-2">
+        <div class="field">
+          <label>First Name <span class="req">*</span></label>
+          <input type="text" id="firstName" placeholder="e.g. María" autocomplete="given-name">
+          <div class="err-msg" id="err-firstName">This field is required.</div>
+        </div>
+        <div class="field">
+          <label>Last Name <span class="req">*</span></label>
+          <input type="text" id="lastName" placeholder="e.g. Torres" autocomplete="family-name">
+          <div class="err-msg" id="err-lastName">This field is required.</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Email Address <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="author@university.edu" autocomplete="email">
+        <div class="err-msg" id="err-email">Please enter a valid email address.</div>
+      </div>
+
+      <div class="field">
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="+51 999 000 000" autocomplete="tel">
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Institution / University <span class="req">*</span></label>
+          <input type="text" id="institution" placeholder="e.g. UNAC" autocomplete="organization">
+          <div class="err-msg" id="err-institution">This field is required.</div>
+        </div>
+        <div class="field">
+          <label>Country <span class="req">*</span></label>
+          <select id="country">
+            <option value="">Select country…</option>
+            <option>Peru</option><option>Argentina</option><option>Brazil</option>
+            <option>Chile</option><option>Colombia</option><option>Mexico</option>
+            <option>Ecuador</option><option>Bolivia</option><option>Venezuela</option>
+            <option>Uruguay</option><option>Paraguay</option><option>Costa Rica</option>
+            <option>Panama</option><option>Cuba</option><option>Dominican Republic</option>
+            <option>United States</option><option>Canada</option><option>Spain</option>
+            <option>Germany</option><option>France</option><option>United Kingdom</option>
+            <option>Japan</option><option>China</option><option>South Korea</option>
+            <option>Other</option>
+          </select>
+          <div class="err-msg" id="err-country">Please select a country.</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Role / Academic Position <span class="req">*</span></label>
+        <select id="role">
+          <option value="">Select role…</option>
+          <option>Undergraduate Student</option>
+          <option>Graduate Student (Master's)</option>
+          <option>PhD Student</option>
+          <option>Postdoctoral Researcher</option>
+          <option>Professor / Faculty</option>
+          <option>Independent Researcher</option>
+          <option>Industry Professional</option>
+          <option>Other</option>
+        </select>
+        <div class="err-msg" id="err-role">Please select your role.</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <span></span>
+      <button class="btn btn-primary" onclick="goNext(1)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 2: POSTER DETAILS ── -->
+  <div class="form-section" id="step-2">
+    <div class="section-header">
+      <h2>Poster Details</h2>
+      <p>Basic information about your submission.</p>
+    </div>
+
+    <div class="card">
+      <div class="field">
+        <label>Poster Title <span class="req">*</span></label>
+        <input type="text" id="title" placeholder="Enter the full title of your poster">
+        <div class="err-msg" id="err-title">Please enter a title.</div>
+        <div class="hint">Use sentence case. Avoid abbreviations in the title.</div>
+      </div>
+
+      <div class="field">
+        <label>Thematic Area <span class="req">*</span></label>
+        <select id="area">
+          <option value="">Select an area…</option>
+          <optgroup label="Engineering & Technology">
+            <option>Biomedical Engineering</option>
+            <option>Electronic Engineering</option>
+            <option>Computer Science & AI</option>
+            <option>Data Science & Informatics</option>
+            <option>Environmental Engineering</option>
+            <option>Chemical Engineering</option>
+          </optgroup>
+          <optgroup label="Life Sciences">
+            <option>Biotechnology & Synthetic Biology</option>
+            <option>Bioinformatics & Genomics</option>
+            <option>Medicine & Health Sciences</option>
+            <option>Tissue Engineering & Regenerative Medicine</option>
+            <option>Microbiology & Immunology</option>
+            <option>Biochemistry</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option>Innovation & Entrepreneurship</option>
+            <option>Other / Interdisciplinary</option>
+          </optgroup>
+        </select>
+        <div class="err-msg" id="err-area">Please select a thematic area.</div>
+      </div>
+
+      <div class="field">
+        <label>Co-authors</label>
+        <div class="coauthor-list" id="coauthor-list">
+          <div class="coauthor-row">
+            <input type="text" placeholder="Full name" class="co-name">
+            <input type="text" placeholder="Institution" class="co-inst">
+            <button class="remove-btn" onclick="removeCoauthor(this)" title="Remove">×</button>
+          </div>
+        </div>
+        <button class="add-btn" onclick="addCoauthor()">+ Add co-author</button>
+        <div class="hint">List all contributing authors in order of contribution.</div>
+      </div>
+
+      <div class="field">
+        <label>Presentation Preference <span class="req">*</span></label>
+        <div class="radio-group" id="presentation-type">
+          <label class="radio-option">
+            <input type="radio" name="pres" value="in-person">
+            <span>In-person presentation<small>You will be physically present at the symposium to present your poster.</small></span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="pres" value="virtual">
+            <span>Virtual presentation<small>Your poster will be displayed in the virtual session.</small></span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="pres" value="either">
+            <span>Either format<small>You are flexible and accept whichever option the committee assigns.</small></span>
+          </label>
+        </div>
+        <div class="err-msg" id="err-presentation">Please select a presentation preference.</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="goBack(2)">← Back</button>
+      <button class="btn btn-primary" onclick="goNext(2)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 3: CONTENT ── -->
+  <div class="form-section" id="step-3">
+    <div class="section-header">
+      <h2>Abstract & Content</h2>
+      <p>The scientific content of your submission.</p>
+    </div>
+
+    <div class="card">
+      <div class="field">
+        <label>Abstract <span class="req">*</span></label>
+        <div class="char-wrap">
+          <textarea id="abstract" placeholder="Briefly describe your research: motivation, methods, results, and conclusions." rows="8" oninput="updateCharCount('abstract','abstract-count',150,300)"></textarea>
+          <div class="char-count" id="abstract-count">0 / 300</div>
+        </div>
+        <div class="err-msg" id="err-abstract">Abstract must be between 150 and 300 words.</div>
+        <div class="hint">Between 150 and 300 words. Do not include references or figures.</div>
+      </div>
+
+      <div class="field">
+        <label>Keywords <span class="req">*</span></label>
+        <div class="tag-input-wrap" id="keyword-wrap" onclick="document.getElementById('keyword-input').focus()">
+          <input type="text" id="keyword-input" placeholder="Type and press Enter…" onkeydown="handleKeyword(event)">
+        </div>
+        <div class="err-msg" id="err-keywords">Add between 3 and 6 keywords.</div>
+        <div class="hint">3 to 6 keywords separated by Enter. Example: biosensor, arsenic detection, electrochemistry.</div>
+        <input type="hidden" id="keywords-value">
+      </div>
+
+      <div class="field">
+        <label>Research Stage</label>
+        <select id="stage">
+          <option value="">Select stage…</option>
+          <option>Conceptual / Early design</option>
+          <option>In progress (data collection)</option>
+          <option>Analysis & write-up</option>
+          <option>Completed research</option>
+          <option>Published / Under review</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Funding Source (if any)</label>
+        <input type="text" id="funding" placeholder="e.g. PROINNOVATEC, CONCYTEC, self-funded">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="goBack(3)">← Back</button>
+      <button class="btn btn-primary" onclick="goNext(3)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 4: CONFIRM ── -->
+  <div class="form-section" id="step-4">
+    <div class="section-header">
+      <h2>Review & Submit</h2>
+      <p>Please confirm the declarations below before submitting.</p>
+    </div>
+
+    <!-- Summary card -->
+    <div class="card" id="summary-card" style="margin-bottom:16px;">
+      <div id="summary-content" style="font-size:14px; line-height:1.7; color:var(--label);"></div>
+    </div>
+
+    <div class="card">
+      <div class="check-group">
+        <label class="check-option">
+          <input type="checkbox" id="check-original">
+          <span>I confirm that this work is original and has not been plagiarized. All sources have been properly cited.<small>Submissions found to violate this will be disqualified.</small></span>
+        </label>
+        <label class="check-option">
+          <input type="checkbox" id="check-consent">
+          <span>I consent to the potential publication of my poster abstract in the symposium proceedings.<small>Your name and institution will be listed as they appear in this form.</small></span>
+        </label>
+        <label class="check-option">
+          <input type="checkbox" id="check-notify">
+          <span>I understand that I will receive an acceptance or rejection notification via email within the stated review period.<small>Check your spam folder if you do not receive a response.</small></span>
+        </label>
+      </div>
+      <div class="err-msg" id="err-declarations" style="margin-top:12px;">Please confirm all declarations to proceed.</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="goBack(4)">← Back</button>
+      <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">Submit Poster ✓</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- SUCCESS -->
+<div class="success-screen" id="success-screen">
+  <div class="success-icon">✓</div>
+  <h2>Submission Received</h2>
+  <p>Your poster has been submitted successfully. You will receive a confirmation email shortly, followed by a review decision within the stated period.</p>
+  <div class="ref-code" id="ref-code">—</div>
+  <p style="font-size:13px;">Keep this reference code for your records.</p>
+</div>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 4;
+  const keywords = [];
+
+  // ── NAVIGATION ──
+  function goNext(step) {
+    if (!validateStep(step)) return;
+    if (step === 3) buildSummary();
+    currentStep = step + 1;
+    showStep(currentStep);
+  }
+
+  function goBack(step) {
+    currentStep = step - 1;
+    showStep(currentStep);
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-' + n).classList.add('active');
+
+    document.querySelectorAll('.step-item').forEach(item => {
+      const s = parseInt(item.dataset.step);
+      item.classList.remove('active', 'completed');
+      if (s < n) item.classList.add('completed');
+      if (s === n) item.classList.add('active');
+      if (s < n) item.querySelector('.step-circle').textContent = '✓';
+      else item.querySelector('.step-circle').textContent = s;
+    });
+
+    document.getElementById('progress-fill').style.width = (n / totalSteps * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── VALIDATION ──
+  function validateStep(step) {
+    let valid = true;
+
+    if (step === 1) {
+      valid &= req('firstName', 'err-firstName');
+      valid &= req('lastName', 'err-lastName');
+      valid &= email('email', 'err-email');
+      valid &= req('institution', 'err-institution');
+      valid &= req('country', 'err-country');
+      valid &= req('role', 'err-role');
+    }
+
+    if (step === 2) {
+      valid &= req('title', 'err-title');
+      valid &= req('area', 'err-area');
+      const pres = document.querySelector('input[name="pres"]:checked');
+      if (!pres) { show('err-presentation'); valid = false; }
+      else hide('err-presentation');
+    }
+
+    if (step === 3) {
+      valid &= abstractCheck();
+      valid &= keywordsCheck();
+    }
+
+    if (step === 4) {
+      const checks = ['check-original','check-consent','check-notify'];
+      const allChecked = checks.every(id => document.getElementById(id).checked);
+      if (!allChecked) { show('err-declarations'); valid = false; }
+      else hide('err-declarations');
+    }
+
+    return !!valid;
+  }
+
+  function req(id, errId) {
+    const el = document.getElementById(id);
+    const v = el.value.trim();
+    if (!v) { el.classList.add('error'); show(errId); return false; }
+    el.classList.remove('error'); hide(errId); return true;
+  }
+
+  function email(id, errId) {
+    const el = document.getElementById(id);
+    const v = el.value.trim();
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    if (!ok) { el.classList.add('error'); show(errId); return false; }
+    el.classList.remove('error'); hide(errId); return true;
+  }
+
+  function abstractCheck() {
+    const el = document.getElementById('abstract');
+    const words = el.value.trim().split(/\s+/).filter(Boolean).length;
+    if (words < 150 || words > 300) { el.classList.add('error'); show('err-abstract'); return false; }
+    el.classList.remove('error'); hide('err-abstract'); return true;
+  }
+
+  function keywordsCheck() {
+    if (keywords.length < 3 || keywords.length > 6) { show('err-keywords'); return false; }
+    hide('err-keywords'); return true;
+  }
+
+  function show(id) { document.getElementById(id).classList.add('show'); }
+  function hide(id) { document.getElementById(id).classList.remove('show'); }
+
+  // ── CHAR COUNTER ──
+  function updateCharCount(textareaId, counterId, min, max) {
+    const words = document.getElementById(textareaId).value.trim().split(/\s+/).filter(Boolean).length;
+    const el = document.getElementById(counterId);
+    el.textContent = words + ' / ' + max;
+    el.className = 'char-count';
+    if (words > max) el.classList.add('over');
+    else if (words >= max * 0.85) el.classList.add('warn');
+  }
+
+  // ── KEYWORDS ──
+  function handleKeyword(e) {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      const val = e.target.value.trim().replace(/,$/, '');
+      if (val && keywords.length < 6 && !keywords.includes(val)) {
+        keywords.push(val);
+        renderTags();
+      }
+      e.target.value = '';
+    } else if (e.key === 'Backspace' && e.target.value === '' && keywords.length) {
+      keywords.pop();
+      renderTags();
+    }
+  }
+
+  function renderTags() {
+    const wrap = document.getElementById('keyword-wrap');
+    wrap.querySelectorAll('.tag').forEach(t => t.remove());
+    keywords.forEach((kw, i) => {
+      const tag = document.createElement('div');
+      tag.className = 'tag';
+      tag.innerHTML = `${kw} <button onclick="removeTag(${i})">×</button>`;
+      wrap.insertBefore(tag, document.getElementById('keyword-input'));
+    });
+    document.getElementById('keywords-value').value = keywords.join(', ');
+  }
+
+  function removeTag(i) {
+    keywords.splice(i, 1);
+    renderTags();
+  }
+
+  // ── CO-AUTHORS ──
+  function addCoauthor() {
+    const list = document.getElementById('coauthor-list');
+    const row = document.createElement('div');
+    row.className = 'coauthor-row';
+    row.innerHTML = `
+      <input type="text" placeholder="Full name" class="co-name">
+      <input type="text" placeholder="Institution" class="co-inst">
+      <button class="remove-btn" onclick="removeCoauthor(this)" title="Remove">×</button>
+    `;
+    // apply styles to new inputs
+    row.querySelectorAll('input').forEach(inp => {
+      inp.style.cssText = 'width:100%;background:var(--surface);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:Inter,sans-serif;font-size:14px;padding:11px 14px;outline:none;';
+    });
+    list.appendChild(row);
+  }
+
+  function removeCoauthor(btn) {
+    const list = document.getElementById('coauthor-list');
+    if (list.children.length > 1) btn.closest('.coauthor-row').remove();
+  }
+
+  // Apply styles to initial co-author inputs
+  document.querySelectorAll('.coauthor-row input').forEach(inp => {
+    inp.style.cssText = 'width:100%;background:var(--surface);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:Inter,sans-serif;font-size:14px;padding:11px 14px;outline:none;';
+  });
+
+  // ── SUMMARY ──
+  function buildSummary() {
+    const names = [];
+    document.querySelectorAll('.co-name').forEach(el => { if (el.value.trim()) names.push(el.value.trim()); });
+    const coStr = names.length ? names.join(', ') : '—';
+    const pres = document.querySelector('input[name="pres"]:checked');
+
+    document.getElementById('summary-content').innerHTML = `
+      <table style="width:100%;border-collapse:collapse;">
+        ${row('Author', v('firstName') + ' ' + v('lastName'))}
+        ${row('Email', v('email'))}
+        ${row('Institution', v('institution') + ', ' + v('country'))}
+        ${row('Role', v('role'))}
+        ${row('Title', v('title'))}
+        ${row('Area', v('area'))}
+        ${row('Co-authors', coStr)}
+        ${row('Presentation', pres ? pres.value : '—')}
+        ${row('Keywords', keywords.join(', ') || '—')}
+        ${row('Stage', v('stage') || '—')}
+      </table>
+    `;
+  }
+
+  function row(label, val) {
+    return `<tr>
+      <td style="padding:7px 0;color:var(--muted);font-size:12px;width:38%;vertical-align:top;">${label}</td>
+      <td style="padding:7px 0;font-size:14px;color:var(--text);vertical-align:top;">${val}</td>
+    </tr>`;
+  }
+
+  function v(id) { return document.getElementById(id).value.trim(); }
+
+  // ── SUBMIT ──
+  function submitForm() {
+    if (!validateStep(4)) return;
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Submitting…';
+    btn.disabled = true;
+
+    // Simulate async submission (replace with real API call)
+    setTimeout(() => {
+      document.getElementById('form-wrap').style.display = 'none';
+      document.getElementById('steps-nav').style.display = 'none';
+      document.getElementById('progress-bar-wrap').style.display = 'none';
+      const ref = 'CFP-' + Date.now().toString(36).toUpperCase().slice(-6);
+      document.getElementById('ref-code').textContent = ref;
+      document.getElementById('success-screen').classList.add('show');
+    }, 1200);
+  }
+</script>
+</body>
+</html>
