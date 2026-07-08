@@ -9,27 +9,32 @@
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   :root{
-    /* ── PALETA ISC LA 2026 ── edita aquí para cambiar colores ── */
+    /* ══ PALETA ISC LA 2026 ══ edita aquí para cambiar colores ══ */
     --bg:       #0b0a12;       /* negro base */
-    --surface:  #100e1e;       /* superficie inputs */
-    --card:     #13112a;       /* tarjetas */
-    --border:   #2a1f52;       /* bordes sutiles */
+    --surface:  #12102a;       /* superficie inputs */
+    --card:     #171335;       /* tarjetas */
+    --border:   #2c2456;       /* bordes sutiles */
 
-    --purple:   #43278C;       /* morado oscuro — color primario */
-    --purple2:  #34206F;       /* violeta oscuro — color secundario */
-    --cyan:     #2A9DB0;       /* cian oscuro — acento principal */
-    --cyan-md:  #3DB8C5;       /* cian medio — hover / highlights */
-    --cyan-lt:  #1F7F8E;       /* cian claro — detalles */
+    /* VIOLETA (color primario — títulos, botones) */
+    --purple:   #7c3aed;       /* violeta brillante */
+    --purple2:  #a855f7;       /* violeta claro */
+    --purple-dk:#43278C;       /* morado oscuro (de tu paleta) */
 
-    --bdf:      #3DB8C5;       /* borde focus inputs */
-    --pdim:     #2A9DB018;     /* fondo translúcido cian */
-    --pglow:    #3DB8C535;     /* glow cian */
-    --plt:      #3DB8C5;       /* texto destacado claro */
+    /* CIAN (acentos — de tu paleta) */
+    --cyan:     #2A9DB0;       /* cian oscuro */
+    --cyan-md:  #3DB8C5;       /* cian medio */
+    --cyan-lt:  #1F7F8E;       /* cian claro */
 
-    --accent:   #3DB8C5;       /* color acento general */
-    --text:     #e8f0f5;       /* texto principal */
-    --muted:    #6b8a95;       /* texto secundario */
-    --label:    #9ab5bf;       /* labels */
+    /* derivados */
+    --bdf:      #7c3aed;       /* borde focus inputs */
+    --pdim:     #7c3aed1a;     /* fondo violeta translúcido */
+    --pglow:    #7c3aed40;     /* glow violeta */
+    --plt:      #a855f7;       /* texto destacado */
+    --accent:   #a855f7;       /* acento general (violeta claro) */
+
+    --text:     #ede9ff;
+    --muted:    #7f74a8;
+    --label:    #b3a6d6;
     --error:    #f87171;
     --success:  #34d399;
   }
@@ -37,16 +42,16 @@
   body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;padding-bottom:80px;}
 
   /* HEADER */
-  .header{position:relative;overflow:hidden;padding:56px 24px 48px;text-align:center;background:linear-gradient(160deg,#1a0d3a 0%,#0b0a12 55%,#0d1a1e 100%);border-bottom:1px solid var(--border);}
+  .header{position:relative;overflow:hidden;padding:56px 24px 48px;text-align:center;background:linear-gradient(160deg,#1e0d3f 0%,#0b0a12 55%,#0c1518 100%);border-bottom:1px solid var(--border);}
   .header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 39px,#2a1f5215 39px,#2a1f5215 40px),repeating-linear-gradient(0deg,transparent,transparent 39px,#2a1f5215 39px,#2a1f5215 40px);pointer-events:none;}
-  .header::after{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:300px;background:radial-gradient(ellipse 70% 50% at 30% 50%,#43278C30 0%,transparent 60%),radial-gradient(ellipse 70% 50% at 70% 50%,#2A9DB028 0%,transparent 60%);pointer-events:none;}
+  .header::after{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:300px;background:radial-gradient(ellipse 75% 55% at 40% 45%,#7c3aed30 0%,transparent 62%),radial-gradient(ellipse 60% 45% at 75% 55%,#2A9DB022 0%,transparent 60%);pointer-events:none;}
   .event-logo{
     display:block;
     max-width:420px;width:90%;height:auto;
     margin:0 auto 36px;
     position:relative;z-index:1;
     mix-blend-mode:screen;
-    filter:brightness(1.05) drop-shadow(0 0 24px #2A9DB050);
+    filter:brightness(1.05) drop-shadow(0 0 24px #7c3aed50);
     -webkit-mask-image:radial-gradient(ellipse 90% 85% at 50% 50%,#000 55%,transparent 100%);
     mask-image:radial-gradient(ellipse 90% 85% at 50% 50%,#000 55%,transparent 100%);
   }
@@ -70,7 +75,7 @@
   .step-item:not(:last-child)::after{content:'';position:absolute;top:14px;left:50%;width:100%;height:1px;background:var(--border);transition:background .4s;}
   .step-item.completed:not(:last-child)::after{background:var(--purple);}
   .step-circle{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--muted);position:relative;z-index:1;transition:all .3s;}
-  .step-item.active .step-circle{border-color:var(--cyan);color:var(--cyan-md);background:var(--pdim);box-shadow:0 0 12px var(--pglow);}
+  .step-item.active .step-circle{border-color:var(--purple);color:var(--purple2);background:var(--pdim);box-shadow:0 0 12px var(--pglow);}
   .step-item.completed .step-circle{border-color:var(--purple);background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;}
   .step-label{font-size:11px;color:var(--muted);margin-top:6px;font-weight:500;text-align:center;}
   .step-item.active .step-label{color:var(--accent);}
@@ -79,7 +84,7 @@
   /* PROGRESS */
   .progress-bar-wrap{max-width:640px;margin:16px auto 0;padding:0 16px;}
   .progress-track{height:2px;background:var(--border);border-radius:2px;overflow:hidden;}
-  .progress-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan),var(--cyan-md));border-radius:2px;transition:width .4s ease;box-shadow:0 0 8px var(--pglow);}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--purple2),var(--cyan-md));border-radius:2px;transition:width .4s ease;box-shadow:0 0 8px var(--pglow);}
 
   /* FORM */
   .form-wrap{max-width:640px;margin:32px auto 0;padding:0 16px;}
@@ -141,8 +146,8 @@
   .btn{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;border-radius:10px;padding:12px 24px;cursor:pointer;border:none;transition:all .22s;letter-spacing:.01em;}
   .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted);}
   .btn-ghost:hover{border-color:var(--label);color:var(--text);}
-  .btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple2),var(--cyan));color:#fff;box-shadow:0 0 20px var(--pglow);}
-  .btn-primary:hover{box-shadow:0 0 32px var(--pglow);transform:translateY(-1px);background:linear-gradient(135deg,var(--purple2),var(--cyan),var(--cyan-md));}
+  .btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;box-shadow:0 0 20px var(--pglow);}
+  .btn-primary:hover{box-shadow:0 0 32px var(--pglow);transform:translateY(-1px);background:linear-gradient(135deg,var(--purple),var(--cyan));}
   .btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
 
   /* SUCCESS */
@@ -343,7 +348,7 @@ const CONFIG = {
   deadlineNotif:     "September 11, 2026",
   deadlineCorrect:   "September 25, 2026",
   deadlineAccept:    "October 2, 2026",
-  conferenceDate:    "November 16-18, 2026",
+  conferenceDate:    "November 18–20, 2026",
 
   // DESCRIPCIÓN DEL HEADER
   headerDescription: "Submit your research to be featured at ISC LA 2026. Accepted posters will be presented at the conference and included in the official proceedings.",
@@ -366,10 +371,15 @@ const CONFIG = {
   // NÚMERO MÁXIMO DE AUTORES
   maxAuthors: 6,
 
+  // URL de Google Apps Script (aquí se guardan las respuestas)
+  sheetWebhookUrl: "https://script.google.com/macros/s/AKfycbyFgboAqtqNvb4S87dhQmCBnCADQezGvF2bF1ycPFZmUNqD_EwsdQP_rJJ7EPBB9G7M/exec",
+
   // COLORES (puedes cambiarlos si el evento actualiza su paleta)
   colorPurple:  "#7c3aed",
+  colorPurple2: "#a855f7",
+  colorCyan:    "#2A9DB0",
   colorAccent:  "#a855f7",
-  colorBg:      "#0d0b1a",
+  colorBg:      "#0b0a12",
 };
 /* ════════════════════════════════════════
    FIN DE ZONA DE CONFIGURACIÓN
@@ -409,7 +419,11 @@ function applyConfig() {
   }
   // CSS color variables
   document.documentElement.style.setProperty('--purple', CONFIG.colorPurple);
+  document.documentElement.style.setProperty('--purple2', CONFIG.colorPurple2);
+  document.documentElement.style.setProperty('--bdf', CONFIG.colorPurple);
   document.documentElement.style.setProperty('--accent', CONFIG.colorAccent);
+  document.documentElement.style.setProperty('--plt', CONFIG.colorAccent);
+  document.documentElement.style.setProperty('--cyan', CONFIG.colorCyan);
   document.documentElement.style.setProperty('--bg', CONFIG.colorBg);
   document.documentElement.style.setProperty('--bdf', CONFIG.colorPurple);
 }
