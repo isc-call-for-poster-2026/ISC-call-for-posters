@@ -41,8 +41,9 @@
   .header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 39px,#2a1f5215 39px,#2a1f5215 40px),repeating-linear-gradient(0deg,transparent,transparent 39px,#2a1f5215 39px,#2a1f5215 40px);pointer-events:none;}
   .header::after{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:300px;background:radial-gradient(ellipse 70% 50% at 30% 50%,#43278C30 0%,transparent 60%),radial-gradient(ellipse 70% 50% at 70% 50%,#2A9DB028 0%,transparent 60%);pointer-events:none;}
   .event-logo{
-    max-width:340px;width:82%;height:auto;
-    margin-bottom:20px;
+    display:block;
+    max-width:420px;width:90%;height:auto;
+    margin:0 auto 36px;
     position:relative;z-index:1;
     mix-blend-mode:screen;
     filter:brightness(1.05) drop-shadow(0 0 24px #2A9DB050);
@@ -152,7 +153,6 @@
   .success-screen p{color:var(--muted);max-width:420px;margin:0 auto 24px;font-size:15px;}
   .ref-code{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 20px;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--accent);letter-spacing:.08em;margin-bottom:32px;}
 
-  .event-logo{max-width:320px;width:85%;height:auto;margin-bottom:24px;position:relative;z-index:1;filter:drop-shadow(0 0 20px #7c3aed40);}
   ::-webkit-scrollbar{width:6px;}
   ::-webkit-scrollbar-track{background:var(--bg);}
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
@@ -343,7 +343,7 @@ const CONFIG = {
   deadlineNotif:     "September 11, 2026",
   deadlineCorrect:   "September 25, 2026",
   deadlineAccept:    "October 2, 2026",
-  conferenceDate:    "November 18–20, 2026",
+  conferenceDate:    "November 16-18, 2026",
 
   // DESCRIPCIÓN DEL HEADER
   headerDescription: "Submit your research to be featured at ISC LA 2026. Accepted posters will be presented at the conference and included in the official proceedings.",
@@ -540,19 +540,65 @@ function buildSummary(){
 function row(l,v){return `<tr><td style="padding:5px 0;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;width:36%;vertical-align:top;">${l}</td><td style="padding:5px 0;font-size:13px;color:var(--text);vertical-align:top;">${v}</td></tr>`;}
 function gv(id){const el=document.getElementById(id);return el?el.value.trim():'—';}
 
+function collectCoauthors() {
+  const n = parseInt(document.getElementById('num-authors').value) || 0;
+  const list = [];
+  for (let i = 2; i <= n; i++) {
+    const fn = gv(`a${i}-firstName`), ln = gv(`a${i}-lastName`);
+    const inst = gv(`a${i}-institution`), co = gv(`a${i}-country`);
+    if (fn || ln) list.push(`${fn} ${ln} (${inst}, ${co})`);
+  }
+  return list.join(' | ');
+}
+
 function submitForm(){
   if(!validateStep(4))return;
   const btn=document.getElementById('submit-btn');
   btn.textContent='Submitting...';
   btn.disabled=true;
-  setTimeout(()=>{
+
+  const ref='ISCLA26-'+Date.now().toString(36).toUpperCase().slice(-6);
+  const pres = document.querySelector('input[name="pres"]:checked');
+
+  const payload = {
+    refCode: ref,
+    author1Name: gv('a1-firstName') + ' ' + gv('a1-lastName'),
+    author1Email: gv('a1-email'),
+    author1Phone: gv('a1-phone'),
+    author1Institution: gv('a1-institution'),
+    author1Country: gv('a1-country'),
+    author1Role: gv('a1-role'),
+    coauthors: collectCoauthors(),
+    title: gv('title'),
+    area: gv('area'),
+    presentation: pres ? pres.value : '',
+    stage: gv('stage'),
+    funding: gv('funding'),
+    abstract: document.getElementById('abstract').value.trim(),
+    keywords: keywords.join(', ')
+  };
+
+  // Convierte el payload a form-urlencoded (más compatible con Apps Script)
+  const formData = new URLSearchParams();
+  Object.keys(payload).forEach(k => formData.append(k, payload[k]));
+
+  fetch(CONFIG.sheetWebhookUrl, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: formData
+  })
+  .then(() => {
     document.getElementById('form-wrap').style.display='none';
     document.getElementById('steps-nav').style.display='none';
     document.getElementById('progress-bar-wrap').style.display='none';
-    const ref='ISCLA26-'+Date.now().toString(36).toUpperCase().slice(-6);
     document.getElementById('ref-code').textContent=ref;
     document.getElementById('success-screen').classList.add('show');
-  },1200);
+  })
+  .catch(() => {
+    alert('There was a problem submitting your poster. Please try again or contact the organizers.');
+    btn.textContent='Submit Poster \u2713';
+    btn.disabled=false;
+  });
 }
 </script>
 </body>
